@@ -1,0 +1,23 @@
+diff -up gtk-doc-1.11/gtkdoc-mkdb.in.index gtk-doc-1.11/gtkdoc-mkdb.in
+--- gtk-doc-1.11/gtkdoc-mkdb.in.index	2008-11-06 14:01:42.000000000 -0500
++++ gtk-doc-1.11/gtkdoc-mkdb.in	2008-11-23 17:37:33.000000000 -0500
+@@ -823,9 +823,9 @@ sub OutputIndex {
+             $short_symbol = $symbol;
+         }
+ 
+-        my $xref = &MakeXRef ($symbol);
+         my $curletter = uc(substr($short_symbol,0,1));
+         my $id = $apiindex{$symbol};
++        my $xref = &MakeXRef ($id, $symbol);
+         
+         #print "  add symbol $symbol with $id to index in section $curletter\n";
+ 
+@@ -2127,7 +2127,7 @@ sub CreateValidSGMLID {
+     # Special case, '_' would end up as '' so we use 'gettext-macro' instead.
+     if ($id eq "_") { return "gettext-macro"; }
+ 
+-    if ($id !~ /[a-z]/) { $id .= ":CAPS" };
++    if ($id !~ /[a-z]/ && $id !~ /-CAPS$/) { $id .= ":CAPS" };
+ 
+     $id =~ s/[_ ]/-/g;
+     $id =~ s/[,\.]//g;
